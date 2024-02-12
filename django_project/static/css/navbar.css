@@ -1,0 +1,65 @@
+body{
+    margin: 0;
+    font-size: 16px;
+}
+
+main{
+    margin: 1em 1em;
+}
+
+nav {
+    display: flex;
+    background: #6C6F91;
+    padding: 0.5em;
+    font-size: 24px;
+}
+
+nav a{
+    background: white;
+    padding: 6px;
+    border-radius: 15px;
+
+    font-weight: bold;
+    text-decoration: none;
+    vertical-align: middle;
+    color: #3A3E66;
+    margin-right: 5px;
+
+    min-width: max-content;
+}
+
+nav input{
+    width: 50%;
+    padding: 6px;
+    border-radius: 15px;
+    font-weight: bold;
+
+}
+
+nav .home-dashboard{
+    width: 80%;
+}
+
+nav a img{
+    width: 30px;
+    vertical-align: -5px;
+}
+
+@media screen and (max-width: 600px) {
+    nav label {
+        display: none;
+    }
+}
+
+.home-dashboard{
+    display: flex;
+}
+.profile-anchor{
+    width: 20%;
+    display: flex;
+    justify-content: end;
+}
+
+.profile-anchor a{
+    margin: 0
+}
