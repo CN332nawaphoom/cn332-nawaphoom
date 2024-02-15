@@ -10,14 +10,18 @@
 <body>
     <nav>
         <div class="home-dashboard">
-            <a href="{% url 'index' %}" id="home-icon"><img src="{% static 'img/home.svg' %}" alt=""><label>Home</label></a>
-            <a href="{% url 'dashboard' %}"><img src="{% static 'img/team_dashboard.svg' %}" alt=""><label>Dashboard</label></a>
-            <input type="text" name="search" id="" placeholder="type traffic here">
+            <a href="{% url 'dashboard' %}" id="home-icon"><img src="{% static 'img/home.svg' %}" alt=""></a>
+            {% comment %} <a href="{% url 'dashboard' %}"><img src="{% static 'img/team_dashboard.svg' %}" alt=""><label>Dashboard</label></a> {% endcomment %}
+            <input type="search" name="search" id="" placeholder="type traffic here">
         </div>
         
 
-        <div class="profile-anchor">
-            <a href="" class=""><img src="{% static 'img/account_circle.svg' %}" alt=""><label>Profile</label></a>
+        <div class="profile-container">
+            <img src="{% static 'img/account_circle.svg' %}" id="account_circle">
+            <div class='drop-down-content'>
+                <a class="drop-down-item">My Profile</a>
+                <a class="drop-down-item">Logout</a>
+            </div>
         </div>
     </nav>
 </body>
