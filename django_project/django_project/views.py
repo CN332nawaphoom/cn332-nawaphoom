@@ -6,7 +6,7 @@ def index(request):
     return render(request, "index.html")
 
 def login(request):
-    return render(request, "login.html")
+    return render(request, "account/login.html")
 
 def logout_views(request):
     logout(request)
@@ -15,4 +15,4 @@ def logout_views(request):
 def dashboard(request):
     context = {'test_word': "hello_world"}
 
-    return render(request, "dashboard.html", context)
+    return render(request, "main/dashboard.html", context)

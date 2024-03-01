@@ -1,0 +1,42 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static '/css/account/login.css' %}">
+</head>
+<body>
+    <div class="signin-box">
+		<div class="input-sign-in">
+			<h1>Sign In</h1>
+        
+			<form action="">
+				<h2>Username</h2>
+				<div class="input-box">
+					<input type="text" placeholder="Your Username">
+				</div>
+				
+				<h2>Password</h2>
+				<div class="input-box">
+					<input type="text" placeholder="Your password">
+				</div>
+	
+				<button>Login</button>
+			</form>
+		</div>
+		
+		<h2>Or</h2>
+
+		<div class="oauth-sign-in">
+			<a href="{% provider_login_url 'google' %}">Google Sign in</a>
+		</div>
+
+
+
+        
+    </div>
+</body>
+</html>
