@@ -23,8 +23,7 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.login, name='login'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    path('', views.dashboard, name='dashboard'),
 
    
     path('accounts/', include('allauth.urls')), #all OAuth operations will be performed under this route
