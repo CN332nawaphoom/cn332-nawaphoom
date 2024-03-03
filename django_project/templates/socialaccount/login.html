@@ -4,28 +4,54 @@
 
 {% block title %}Sign in{% endblock %}
 
-{% block content %}
-    {% if process == "connect" %}
-        {% element h1 %}
-            {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
-        {% endelement %}
-        <p>
-            {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
-        </p>
-    {% else %}
-        {% element h1 %}
-            {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
-        {% endelement %}
-        <p>
-            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
-        </p>
-    {% endif %}
-    {% element form method="post" no_visible_fields=True %}
-        {% slot actions %}
-            {% csrf_token %}
-            {% element button type="submit" %}
-                {% trans "Continue" %}
+{% block extra_head %}
+    <style>
+        body {
+            margin: 0;
+            display:flex;
+            flex: 1;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            height: 100dvh;
+        }
+        
+        button {
+            width: 100%;
+            text-align: center;
+        }
+        
+        
+    </style>
+{% endblock extra_head %}
+
+
+    {% block content %}
+    <div>
+        {% if process == "connect" %}
+            {% element h1 %}
+                {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
             {% endelement %}
-        {% endslot %}
-    {% endelement %}
-{% endblock content %}
+            <p>
+                {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+            </p>
+        {% else %}
+            {% element h1 %}
+                {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
+            {% endelement %}
+            <p>
+                {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+            </p>
+        {% endif %}
+        {% element form method="post" no_visible_fields=True %}
+            {% slot actions %}
+                {% csrf_token %}
+                {% element button type="submit" %}
+                    {% trans "Continue" %}
+                {% endelement %}
+            {% endslot %}
+        {% endelement %}
+    </div>
+    {% endblock content %}
