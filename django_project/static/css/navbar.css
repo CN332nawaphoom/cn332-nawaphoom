@@ -1,0 +1,114 @@
+body{
+    margin: 0;
+    font-size: 16px;
+}
+
+main{
+    margin: 1em 1em;
+}
+
+nav {
+    display: flex;
+    background: #9497b6;
+    padding: 0.5em;
+    font-size: 24px;
+}
+
+nav a#home-icon{
+    background: white;
+    padding: 6px;
+    border-radius: 15px;
+
+    font-weight: 600;
+    text-decoration: none;
+    vertical-align: middle;
+    color: #3A3E66;
+    margin-right: 5px;
+
+    min-width: max-content;
+}
+
+nav a#home-icon:hover{
+    background: rgb(217, 217, 255);
+}
+
+nav input{
+    width: 50%;
+    height: auto;
+    border-radius: 15px;
+    font-weight: bold;
+
+    text-indent: 3%;
+
+    margin-left: 10px;
+    border: none;
+
+}
+
+nav .home-dashboard{
+    width: 100%;
+}
+
+nav a img{
+    width: 30px;
+    vertical-align: -5px;
+}
+
+@media screen and (max-width: 600px) {
+    nav label {
+        display: none;
+    }
+}
+
+.home-dashboard{
+    display: flex;
+}
+
+.profile-container{
+    background: white;
+    padding: 6px;
+    border-radius: 15px;
+    font-weight: 600;
+
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-container:hover{
+    background: rgb(217, 217, 255);
+}
+
+
+.profile-container .drop-down-content{
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    min-width: max-content;
+}
+
+.profile-container .drop-down-content{
+    display: none;
+}
+
+.profile-container:hover .drop-down-content{
+    display: block;
+    background: rgb(223, 223, 250);
+}
+
+.drop-down-content .drop-down-item{
+    display: block;
+    padding: 0.3em;
+    font-size: smaller;
+}
+
+.drop-down-content .drop-down-item:hover{
+    background: rgb(184, 184, 217);
+    border-radius: 5px;
+}
+
+img#account_circle{
+    width: 30px;
+    vertical-align: -5px;
+}

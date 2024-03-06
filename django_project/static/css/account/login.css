@@ -1,0 +1,15 @@
+body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+
+    height: 100dvh;
+}
+
+form {
+    background-color: rgb(202, 199, 199);
+}
