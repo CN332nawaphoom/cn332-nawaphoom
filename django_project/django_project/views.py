@@ -1,18 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login ,logout
-from django.shortcuts import render, redirect ,HttpResponseRedirect 
+
 
 
 @login_required(login_url='login')
 def index(request):
-    return render(request, "index.html")
+    return render(request, "main/index.html")
 
 
 def login(request):
-    return render(request, "login.html")
+    return render(request, "account/login.html")
 
-@login_required(login_url='login')
+def logout_views(request):
+    logout(request)
+    return redirect('/')
+
+@login_required
 def dashboard(request):
     context = {'test_word': "hello_world"}
-    return render(request, "dashboard.html", context)
+
+    return render(request, "main/dashboard.html", context)
+

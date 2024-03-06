@@ -1,0 +1,38 @@
+{% extends 'account/myBase.html' %} 
+{% load allauth account %}
+{% load socialaccount %}  
+{% load static %}
+
+{% block title %}Login{% endblock title %} 
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/account/login.css' %}" />
+{% endblock %} 
+
+{% block content %}
+  {% element form form=form method="post" action=login_url tags="entrance,login" %}
+    {% slot body %}
+        {% csrf_token %}
+        {% element fields form=form unlabeled=True %}
+        {% endelement %}
+        {% if redirect_field_value %}
+            <input type="hidden"
+                  name="{{ redirect_field_name }}"
+                  value="{{ redirect_field_value }}" />
+        {% endif %}
+    {% endslot %}
+    {% slot actions %}
+        {% element button type="submit" tags="prominent,login" %}
+            Sign In
+        {% endelement %}
+    {% endslot %}
+  {% endelement %}
+
+  <div>
+    <a title="Google" href="/accounts/google/login/?process=login">Google</a><br>
+    <a href="{% provider_login_url 'facebook' %}">Facebook</a>
+
+  </div>
+
+
+{% endblock content %}
