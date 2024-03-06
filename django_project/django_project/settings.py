@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 
@@ -159,6 +160,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
+    },
+
+    'facebook': {
+        'APP': {
+            'client_id': os.environ['FB_APP_ID'],
+            'secret': os.environ['FB_APP_SECRET'],
+        },   
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        
     }
 }
 
