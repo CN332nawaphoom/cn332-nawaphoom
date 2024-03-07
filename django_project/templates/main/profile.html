@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    {% include 'main/navbar-with-search.html' %}
+    <p>Welcome. You are logged in as {{user.username}} </p>
+    <p>Your FirstName: {{user.first_name }} </p>
+    <p>Your LastName: {{user.last_name}} </p>
+    <p>Your Email: {{user.email}} </p>
+</body>
+</html>

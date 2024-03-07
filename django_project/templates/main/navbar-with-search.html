@@ -19,8 +19,8 @@
         <div class="profile-container">
             <img src="{% static 'img/account_circle.svg' %}" id="account_circle">
             <div class='drop-down-content'>
-                <a class="drop-down-item">My Profile</a>
-                <a class="drop-down-item">Logout</a>
+                <a href="{% url 'profile' %}" class="drop-down-item">My Profile</a>
+                <a href="{% url 'logout' %}" class="drop-down-item">Logout</a>
             </div>
         </div>
     </nav>
