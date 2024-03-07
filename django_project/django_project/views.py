@@ -20,6 +20,5 @@ def logout_views(request):
 @login_required
 def dashboard(request):
     context = {'test_word': "hello_world"}
-
-    return render(request, "main/dashboard.html", context)
+    return render(request, "main/dashboard.html",context)
 
