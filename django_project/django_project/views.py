@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 
 
 
-@login_required(redirect_field_name='login')
-def index(request):
-    return render(request, "main/index.html")
+#@login_required(login_url='login')
+#def index(request):
+#    return render(request, "main/index.html")
 
 
 def login(request):
@@ -22,4 +22,10 @@ def dashboard(request):
     context = {'test_word': "hello_world"}
 
     return render(request, "main/dashboard.html", context)
+
+
+@login_required
+def profile(request):
+
+    return render(request, "main/profile.html")
 
