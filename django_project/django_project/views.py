@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-@login_required(login_url='login')
+@login_required(redirect_field_name='login')
 def index(request):
     return render(request, "main/index.html")
 
