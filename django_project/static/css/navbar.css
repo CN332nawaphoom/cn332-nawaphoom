@@ -101,6 +101,7 @@ nav a img{
     display: block;
     padding: 0.3em;
     font-size: smaller;
+    text-decoration: none;
 }
 
 .drop-down-content .drop-down-item:hover{
