@@ -32,9 +32,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'django.contrib.sites',
 
+    'django.contrib.sites',
+    #ssl server  
+    # <https://medium.com/@namantam1/login-with-facebook-and-google-in-django-using-social-auth-app-django-d042bfeb04cb>
+    # <https://pypi.org/project/django-sslserver/0.12/>
+    "sslserver",
     #all auth configurations
     'allauth',
     'allauth.account',
@@ -53,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -169,4 +172,3 @@ SOCIALACCOUNT_PROVIDERS = {
 SITE_ID = 2
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-
