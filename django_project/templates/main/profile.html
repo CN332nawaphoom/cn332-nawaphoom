@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 </head>
 <body>
@@ -13,5 +14,24 @@
     <p>Your FirstName: {{user.first_name }} </p>
     <p>Your LastName: {{user.last_name}} </p>
     <p>Your Email: {{user.email}} </p>
+=======
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    {% include 'main/navbar-with-search.html' %}
+    <div class="frame"></div>
+    <div class="profile">
+        <p>Upload Your Image</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Upload</button>
+        </form>
+        <p>Welcome. You are logged in as {{user.username}} </p>
+        <p>Your FirstName: {{user.first_name }} </p>
+        <p>Your LastName: {{user.last_name}} </p>
+        <p>Your Email: {{user.email}} </p>
+    </div>
+>>>>>>> 1d16081bcba7d54553f64402808c2f418b68115f
 </body>
 </html>
