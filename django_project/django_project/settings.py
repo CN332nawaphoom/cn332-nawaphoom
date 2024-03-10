@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'django_project',
 ]
 
 
@@ -146,8 +147,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'APP': {
-            'client_id': os.environ['CLIENT_ID'],
-            'secret': os.environ['CLIENT_SECRET'],
+            'client_id': '1053408820644-4mfrqpdnv3hdkil4s97qam9c65p6ufur.apps.googleusercontent.com',
+            'secret': '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',
         },
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -157,8 +158,8 @@ SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
          
         'APP': {
-            'client_id': os.environ['FB_APP_ID'],
-            'secret': os.environ['FB_APP_SECRET'],
+            'client_id': '413748511202125',
+            'secret': 'be7b416106d4a6da631231e3bada2724',
         },   
         'AUTH_PARAMS': {
             'access_type': 'online',
