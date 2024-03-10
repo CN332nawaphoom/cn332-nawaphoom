@@ -1,3 +1,27 @@
+body{
+    transition: background-color 0.5s ease;
+}
+
+form{
+    margin-bottom:20px ;
+}
+
+input[type="radio"]
+{
+    margin-bottom: 10px;
+}
+
+main{
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 1rem 1rem;
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 0.25rem;
+    position: fixed;  
+    top: 50%;  
+    left: 50%;  
+    transform: translate(-50%, -50%);
+}
 table {
     border-collapse: collapse;
     width: 100%;
@@ -6,4 +30,8 @@ table {
 th, td{
     text-align: center;
     border: 1px solid rgb(0, 0, 0);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7c2949f0a69bca74eca5d1494d450ca015801427

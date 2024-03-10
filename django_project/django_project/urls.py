@@ -29,4 +29,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'), # default Django logout view at /logout
     path('', views.dashboard, name='index'), 
     path('dashboard/', views.dashboard, name='dashboard'),
+
 ]

@@ -1,5 +1,3 @@
-
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -26,6 +24,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #ssl server  
+    # <https://medium.com/@namantam1/login-with-facebook-and-google-in-django-using-social-auth-app-django-d042bfeb04cb>
+    # <https://pypi.org/project/django-sslserver/0.12/>
+    #"sslserver",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,10 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
-    #ssl server  
-    # <https://medium.com/@namantam1/login-with-facebook-and-google-in-django-using-social-auth-app-django-d042bfeb04cb>
-    # <https://pypi.org/project/django-sslserver/0.12/>
-    "sslserver",
     #all auth configurations
     'allauth',
     'allauth.account',
@@ -132,7 +130,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = ['static/','templates/']
+STATICFILES_DIRS = ['static/',]
 
 
 AUTHENTICATION_BACKENDS = [
@@ -148,8 +146,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'APP': {
-            'client_id': '1053408820644-4mfrqpdnv3hdkil4s97qam9c65p6ufur.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.environ['CLIENT_ID'],
+            'secret': os.environ['CLIENT_SECRET'],
         },
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -159,8 +157,8 @@ SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
          
         'APP': {
-            'client_id': '413748511202125',
-            'secret': 'be7b416106d4a6da631231e3bada2724',
+            'client_id': os.environ['FB_APP_ID'],
+            'secret': os.environ['FB_APP_SECRET'],
         },   
         'AUTH_PARAMS': {
             'access_type': 'online',
