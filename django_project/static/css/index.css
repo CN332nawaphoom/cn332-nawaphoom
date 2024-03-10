@@ -1,3 +1,12 @@
-body {
-    color: red;
+.mainindex{
+    color:rgb(238, 130, 238);
+    text-align: center;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-family: Cursive;
+    font-weight: 900;
+}
+body{
+    background-image: url(../../static/img/a2fe21da9ce7d1698f5b48cdb506c853.jpg);
+    height: 100%;
 }
