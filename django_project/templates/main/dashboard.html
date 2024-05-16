@@ -29,42 +29,34 @@
     <main>
         <p><a href="{% url 'upload_video' %}">Upload New Video</a></p>
         <table>
-            <tr>
-                <th>Intersection Name</th>
-                <th>Province</th>
-                <th>Status</th>
-                <th>Date Added</th>
-                <th>Date Modified</th>
-                <th>Uploaded By</th>
-                <th>View</th>
-            </tr>
-            <tr>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td><button>View</button></td>
-            </tr>
-            <tr>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td><button>View</button></td>
-            </tr>
-            <tr>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td>Lorem</td>
-                <td><button>View</button></td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Intersection Name</th>
+                    <th>Province</th>
+                    <th>Status</th>
+                    <th>Date Added</th>
+                    <th>Date Modified</th>
+                    <th>Uploaded By</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.intersection_name }}</td>
+                        <td>{{ task.province }}</td>
+                        <td>status</td>
+                        <td>{{ task.date_created }}</td>
+                        <td>{{ task.date_modified }}</td>
+                        <td>{{ task.uploaded_by }}</td>
+                        <td><button>View</button></td>
+                    </tr>
+                {% endfor %}
+                    
+            </tbody>
+
+
         </table>
     </main>
 {% endblock body %}
