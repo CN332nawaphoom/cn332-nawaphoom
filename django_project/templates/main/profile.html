@@ -1,26 +1,26 @@
+{% extends 'main/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+
+{% block title %}Profile{% endblock title %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-</head>
-<body>
-    {% include 'main/navbar-with-search.html' %}
-    <div class="frame"></div>
-    <div class="profile">
-        <p>Upload Your Image</p>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit">Upload</button>
-        </form>
-        <p>Welcome. You are logged in as {{user.username}} </p>
-        <p>Your FirstName: {{user.first_name }} </p>
-        <p>Your LastName: {{user.last_name}} </p>
-        <p>Your Email: {{user.email}} </p>
+{% endblock extra_head %}
+
+{% block body %}
+    <div class="frame">
+        {% include 'main/navbar-with-search.html' %}
+        <div class="profile">
+            <p>Upload Your Image</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Upload</button>
+            </form>
+            <p>Welcome. You are logged in as {{user.username}} </p>
+            <p>Your FirstName: {{user.first_name }} </p>
+            <p>Your LastName: {{user.last_name}} </p>
+            <p>Your Email: {{user.email}} </p>
+        </div>
     </div>
-</body>
-</html>
+{% endblock body %}

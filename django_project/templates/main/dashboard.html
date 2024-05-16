@@ -1,21 +1,22 @@
+{% extends 'main/base.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+{% block title %}dashboard{% endblock title %}dashboard
+
+{% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <script>
         function changeBackgroundColor(color)
         {
             document.body.style.backgroundColor = color;
         }
     </script>
-</head>
-<body>
+{% endblock extra_head %}
+
+{% block body %}
     {% include 'main/navbar-with-search.html' %}
-    <from>
+    <form>
         <input type="radio" name="color" value="Tomato" onclick="changeBackgroundColor('Tomato')">Tomato
         <input type="radio" name="color" value="Orange" onclick="changeBackgroundColor('Orange')">Orange
         <input type="radio" name="color" value="DodgerBlue" onclick="changeBackgroundColor('DodgerBlue')">DodgerBlue
@@ -24,7 +25,7 @@
         <input type="radio" name="color" value="SlateBlue" onclick="changeBackgroundColor('SlateBlue')">SlateBlue
         <input type="radio" name="color" value="Violet" onclick="changeBackgroundColor('Violet')">Violet
         <input type="radio" name="color" value="LightGray" onclick="changeBackgroundColor('LightGray')">LightGray
-    </from>
+    </form>
     <main>
         <table>
             <tr>
@@ -65,6 +66,8 @@
             </tr>
         </table>
     </main>
+{% endblock body %}
 
-</body>
-</html>
+
+
+
