@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Task info{% endblock title %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock extra_head %}
+
+{% block body %}
+    {% include 'main/navbar-with-search.html' %}
+    <ul>
+        <li>intersection: {{ task.intersection_name }}</li>
+        <li>province: {{ task.province}}</li>
+        <li>date created: {{ task.date_created }}</li>
+        <li>date modified: {{ task.date_modified }}</li>
+        <li>upload by: {{ task.uploaded_by }}</li>
+    </ul>
+    
+    
+{% endblock body %}

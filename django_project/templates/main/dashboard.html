@@ -50,7 +50,7 @@
                         <td>{{ task.date_created }}</td>
                         <td>{{ task.date_modified }}</td>
                         <td>{{ task.uploaded_by }}</td>
-                        <td><button>View</button></td>
+                        <td><a href="{% url 'task_info' id=task.id %}">View</a></td>
                     </tr>
                 {% endfor %}
                     

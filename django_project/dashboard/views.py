@@ -21,3 +21,8 @@ def upload_video(request):
 
     context = {'form': form}
     return render(request, "main/upload_video.html", context)
+
+def task_info(request, id):
+    task = Task.objects.get(id=id)
+
+    return render(request, 'main/task_info.html', {'task':task})
