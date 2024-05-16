@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Upload Video{% endblock title %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock extra_head %}
+
+{% block body %}
+    {% include 'main/navbar-with-search.html' %}
+    {% if not form.is_valid %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit">
+        </form>
+    {% endif %}
+
+    
+    {% if form.is_valid %}
+        <p>Video Added</p>
+        <table>
+            {{ form.as_table }}
+        </table>
+    {% endif %}
+
+{% endblock body %}

@@ -30,8 +30,8 @@ table {
 th, td{
     text-align: center;
     border: 1px solid rgb(0, 0, 0);
-<<<<<<< HEAD
 }
-=======
+
+main p {
+    text-align: center;
 }
->>>>>>> 7c2949f0a69bca74eca5d1494d450ca015801427
