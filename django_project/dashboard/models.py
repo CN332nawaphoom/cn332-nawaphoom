@@ -1,7 +1,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
-
+from . import Factory
 # Create your models here.
 class Task(models.Model):
     # information
@@ -14,8 +14,16 @@ class Task(models.Model):
     # video
     video = models.FileField(upload_to='videos/')
 
+
+    def detect(self,name_model):
+        model = Factory.get_model(name_model)
+        model.detect(self.video.path)
+
+        
     def __str__(self):
         return self.intersection_name
+    
+    
     
 
 class TaskForm(forms.ModelForm):
