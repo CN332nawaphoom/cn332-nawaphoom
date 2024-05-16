@@ -26,18 +26,14 @@ def upload_image(request):
         form = UploadImageForm()
     return render(request, 'upload_image.html', {'form': form})
 
-@login_required
-def dashboard(request):
-    context = {'test_word': "hello_world"}
-    return render(request, "main/dashboard.html",context)
+# @login_required
+# def dashboard(request):
+#     context = {'test_word': "hello_world"}
+#     return render(request, "main/dashboard.html",context)
 
 @login_required
 def profile(request):
     return render(request, "main/profile.html")
 
-@login_required
-def profile(request):
-
-    return render(request, "main/profile.html")
 
 
