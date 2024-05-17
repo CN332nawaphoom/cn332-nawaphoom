@@ -37,7 +37,8 @@
                     <th>Date Added</th>
                     <th>Date Modified</th>
                     <th>Uploaded By</th>
-                    <th>View</th>
+                    <th>View Task</th>
+                    <th>Dectection</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,6 +52,7 @@
                         <td>{{ task.date_modified }}</td>
                         <td>{{ task.uploaded_by }}</td>
                         <td><a href="{% url 'task_info' id=task.id %}">View</a></td>
+                        <td><a href="{% url 'process_info' id=task.id %}">View</a></td>
                     </tr>
                 {% endfor %}
                     

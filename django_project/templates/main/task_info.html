@@ -4,6 +4,12 @@
 {% block title %}Task info{% endblock title %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<style>
+    #image-container {
+        position: relative;
+    }
+
+</style>
 {% endblock extra_head %}
 
 {% block body %}
@@ -15,6 +21,123 @@
         <li>date modified: {{ task.date_modified }}</li>
         <li>upload by: {{ task.uploaded_by }}</li>
     </ul>
+
+
+
+    <div id="image-container">
+        <img id="image" src="{% static 'img/Screenshot 2024-05-17 221802.png' %}" alt="Image" >
+        
+    </div>
+    <div id="pointer"></div>
+    <p>Coordinates: <span id="coordinates">x, y</span></p>
+
+
+    <div id="filledCoordinates">
+        
+    </div>  
     
+    <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}">
+        {% csrf_token %}
+        <label for="coordinates1">coordinates1</label>
+        <input type="text" id="coordinates1" name="coordinates1" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+        <label for="coordinates2">coordinates2</label>
+        <input type="text" id="coordinates2" name="coordinates2" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+        <label for="coordinates3">coordinates3</label>
+        <input type="text" id="coordinates3" name="coordinates3" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+        <label for="coordinates4">coordinates4</label>
+        <input type="text" id="coordinates4" name="coordinates4" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+        <input type="button" id='addButton' value="add">
+        
+    </form>
+    <input id="process" type="submit" value="process">
+    <script>
+        const imageContainer = document.getElementById('image-container');
+        const pointer = document.getElementById('pointer');
+        const coordinates = document.getElementById('coordinates');
+        let send = document.getElementById('process');
+        let form = document.getElementById('myfillform');
+        let selectedInput = null
+        let filledCoordinatesLists = [];
+
+
+        // Function to update pointer position and display coordinates
+        function updatePointer(event,select) {
+            const rect = imageContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            pointer.style.left = x + 'px';
+            pointer.style.top = y + 'px';
+            coordinates.textContent = x + ', ' + y;
+            pointer.style.display = 'block';
+    
+            // Update form fields with coordinates
+            
+            if (selectedInput) {
+            selectedInput.value = x + ', ' + y;
+        }
+            
+        }
+        function move(event) {
+            const rect = imageContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            pointer.style.left = x + 'px';
+            pointer.style.top = y + 'px';
+            coordinates.textContent = x + ', ' + y;
+            pointer.style.display = 'block';
+        }
+        // Event listener for mouse click
+        imageContainer.addEventListener('click', function(event) {
+            if (selectedInput) {
+                selectedInput.focus();
+            }
+            updatePointer(event);
+        });
+
+        // Function to set the selected input field
+        function setSelectedInput(input) {
+            selectedInput = input;
+        
+        }   
+    
+        imageContainer.addEventListener('mousemove', move);
+    
+        function addform(){
+    
+
+        // Get the filled values
+        const coordinatesObj = {
+            coordinates1: document.getElementById('coordinates1').value,
+            coordinates2: document.getElementById('coordinates2').value,
+            coordinates3: document.getElementById('coordinates3').value,
+            coordinates4: document.getElementById('coordinates4').value
+        };
+        
+        filledCoordinatesLists.push(coordinatesObj);
+
+
+        //clear after adding
+        document.getElementById('coordinates1').value = '';
+        document.getElementById('coordinates2').value = '';
+        document.getElementById('coordinates3').value = '';
+        document.getElementById('coordinates4').value = '';
+        };
+        document.getElementById('addButton').addEventListener('click', function(event) {
+            addform()
+            
+        });   
+        
+        send.addEventListener('click', function(event) {
+            // Add the list of added coordinates as a hidden input field
+            console.log("send")
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'filledCoordinatesLists';
+            hiddenInput.value = JSON.stringify(filledCoordinatesLists);
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        });
+    </script>
     
 {% endblock body %}

@@ -1,7 +1,11 @@
+from typing import Any
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
 from . import Factory
+import json
+
+
 # Create your models here.
 class Task(models.Model):
     # information
@@ -15,16 +19,29 @@ class Task(models.Model):
     video = models.FileField(upload_to='videos/')
 
 
-    def detect(self,name_model):
+    def detect(self,name_model,coordinate):
         model = Factory.get_model(name_model)
-        model.detect(self.video.path)
-
-        
+        data = model.detect(self.video.path,coordinate)
+        return data
+    
+    def get_video_name(self):
+        return self.video.path
+    
     def __str__(self):
         return self.intersection_name
     
+
+class Task_process(models.Model):
     
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
+    # video
+    detected_vdo = models.FileField(upload_to='detection/')
+
+    extra_data = models.TextField() 
     
+    def get_data(self):
+        # Deserialize JSON data from the extra_data field
+        return json.loads(self.extra_data)
 
 class TaskForm(forms.ModelForm):
     class Meta:
