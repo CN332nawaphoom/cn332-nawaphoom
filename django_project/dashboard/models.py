@@ -21,8 +21,9 @@ class Task(models.Model):
 
     def detect(self,name_model,coordinate):
         model = Factory.get_model(name_model)
-        data = model.detect(self.video.path,coordinate)
-        return data
+        if model != None:
+            data = model.detect(self.video.path,coordinate)
+            return data
     
     def get_video_name(self):
         return self.video.path
@@ -35,7 +36,7 @@ class Task_process(models.Model):
     
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
     # video
-    detected_vdo = models.FileField(upload_to='detection/')
+    detected_vdo = models.FileField(upload_to='result/')
 
     extra_data = models.TextField() 
     

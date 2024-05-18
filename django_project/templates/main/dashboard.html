@@ -37,8 +37,9 @@
                     <th>Date Added</th>
                     <th>Date Modified</th>
                     <th>Uploaded By</th>
-                    <th>View Task</th>
+                    <th>Process</th>
                     <th>Dectection</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,8 +52,9 @@
                         <td>{{ task.date_created }}</td>
                         <td>{{ task.date_modified }}</td>
                         <td>{{ task.uploaded_by }}</td>
-                        <td><a href="{% url 'task_info' id=task.id %}">View</a></td>
-                        <td><a href="{% url 'process_info' id=task.id %}">View</a></td>
+                        <td><a href="{% url 'task_info' id=task.id %}">Process</a></td>
+                        <td><a href="{% url 'process_info' id=task.id %}">View Result</a></td>
+                        <td><a href="{% url 'delete_task' id=task.id %}">Delete</a></td>
                     </tr>
                 {% endfor %}
                     

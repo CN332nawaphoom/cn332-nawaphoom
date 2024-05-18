@@ -23,13 +23,8 @@ class Factory_Model():
         if (model_name == "YOLOV8"):
             return YOLOV8()    
 
-        # singleton
         elif(model_name == "YOLOV7"):
-            print(self.Model_YOLOV7 == None)
-            if self.Model_YOLOV7 == None:
-                self.Model_YOLOV7 = YOLOV7()
-            else:   
-                return self.Model_YOLOV7
+            pass
 
 
 Factory = Factory_Model()

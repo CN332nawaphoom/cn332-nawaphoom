@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import TaskForm, Task, Task_process
 from . import Factory
 import json
+from django.core.files import File
+import os
 
 # Create your views here.
 @login_required
@@ -28,36 +30,51 @@ def upload_video(request):
 
 def task_info(request, id):
     task = Task.objects.get(id=id)
-
+    print(task.video.url)
     return render(request, 'main/task_info.html', {'task':task})
 
+def delete_task(request, id):
+    task = Task.objects.get(id=id)
+    Task_process.objects.filter(task=task).delete()
+    task.delete()
+
+    return redirect("dashboard")
 
 def process(request, id):
     task = Task.objects.get(id=id)
     coordinates = []
     if request.method == "POST":
-        data = json.loads(request.POST.get("filledCoordinatesLists"))
-        
-        for box in data:
+        data = json.loads(request.POST.get("Coordinates&model"))
+        print(data["model"])
+
+        for box in data["CoordinatesLists"]:
             coor = []
-            print(box)
             for i in range(1,5):
                 c = box[f"coordinates{i}"].split(",")
                 coor.append((int(c[0]),int(c[1])))
             coordinates.append(coor)
-        print(coordinates)
-        data = task.detect("YOLOV8",coordinates)
-    
-        task_process = Task_process.objects.create(task=task)
-        task_process.detected_vdo = 'detection/'+task.get_video_name().split("\\")[-1]
-        task_process.extra_data = json.dumps(data)
-        task_process.save()
 
+        print(coordinates)
+        data = task.detect(data["model"],coordinates)
+    
+        print("wait process")
+    
+        video_name = os.path.basename(task.get_video_name())
+    
+        with open('media/detection/' + video_name, 'rb') as f:
+          
+            my_video_file = File(f,name=video_name)
+            # my_video_file.open()
+            # task_process.detected_vdo.save(name="result/"+ video_name,content=my_video_file,save=True)
+            task_process = Task_process.objects.create(task=task,detected_vdo=my_video_file)
+            task_process.extra_data = json.dumps(data)
+            task_process.save()
     return redirect("dashboard")
 
 def process_info(request, id):
     task = Task.objects.get(id=id)
-    process = Task_process.objects.filter(task=task).first()
+    process = Task_process.objects.filter(task=task).order_by('-id').first()
     vdo_name = process.detected_vdo.url
+    data = process.get_data()
 
-    return render(request, 'main/process_info.html', {'task':task, 'vdo_path':vdo_name})
+    return render(request, 'main/process_info.html', {'task':task, 'process':process, 'data':data})

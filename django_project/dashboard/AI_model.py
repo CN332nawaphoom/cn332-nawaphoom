@@ -14,32 +14,6 @@ class Model_AI:
         pass
 
 
-def check_intersection(pt1, pt2, line):
-        """Check if a line segment intersects with another line."""
-        x1, y1 = pt1
-        x2, y2 = pt2
-        x3, y3 = line[0]
-        x4, y4 = line[1]
-
-        # Calculate the determinant
-        det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
-
-        # If the determinant is 0, the lines are parallel
-        if det == 0:
-            return False
-
-        # Calculate the intersection point
-        intersect_x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / det
-        intersect_y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / det
-
-        # Check if the intersection point is within the line segments
-        if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
-           min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
-            return True
-
-        return False
-
-
 class YOLOV8(Model_AI):
 
     def __init__(self):
@@ -68,6 +42,9 @@ class YOLOV8(Model_AI):
         
         #region_rect = [[(0, 800), (600, 700), (600, 900), (0, 900)],[(1000, 800), (1600, 700), (1600, 900), (1000, 900)]]
         region_rect = coordinate
+        for l in region_rect:
+            for idx in range(len(l)):
+                l[idx] = ( (l[idx][0]*frame_width)//960,(l[idx][1]*frame_height)//540)
 
         # Init Object Counter
         counters = [object_counter.ObjectCounter() for _ in range(len(region_rect))]
@@ -89,9 +66,13 @@ class YOLOV8(Model_AI):
         
             # Perform detection
             results = self.model.track(frame,  persist=True, conf=0.5,verbose=False)
-            # for r in region_rect:
-            #     pts = np.array(r, np.int32).reshape((-1, 1, 2))
-            #     cv2.polylines(frame, [pts], isClosed=True, color=(255, 0, 255), thickness=5)
+            i = 1
+            for r in region_rect:
+                pts = np.array(r, np.int32).reshape((-1, 1, 2))
+                centroid_x = sum(pt[0] for pt in r) // len(r)
+                centroid_y = sum(pt[1] for pt in r) // len(r)
+                cv2.putText(frame, f'road{i}', (centroid_x, centroid_y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+                i+=1
             # track = frame.copy()
             for counter in counters:
                 counter.start_counting(frame, results)
@@ -102,12 +83,14 @@ class YOLOV8(Model_AI):
         cap.release()
         out.release()
 
-        # #print(counter.track_history)
-        # print(len(counter.counting_dict))
+        data = {}
+        i = 1
         for counter in counters:
-            print(counter.counting_dict)
-            print(counter.in_counts)
-        return [1,2,3]
+            data[f"roadlane{i}"] = counter.in_counts
+            i+=1
+        data["all_detected"] = len(counters[0].counting_dict)  # get all object was deteced
+
+        return data
         
 
     
