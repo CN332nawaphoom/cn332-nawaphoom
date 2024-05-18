@@ -32,7 +32,7 @@ class YOLOV8(Model_AI):
 
 
         cap = cv2.VideoCapture(path_input)
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        fourcc = cv2.VideoWriter_fourcc(*'avc1')
         out = cv2.VideoWriter(filename, fourcc, cap.get(cv2.CAP_PROP_FPS), (int(cap.get(3)), int(cap.get(4))))
 
         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

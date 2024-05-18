@@ -117,8 +117,8 @@
         // Function to update pointer position and display coordinates
         function updatePointer(event,select) {
             const rect = videoContainer.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = Math.round(event.clientX - rect.left);
+            const y = Math.round(event.clientY - rect.top);
             pointer.style.left = x + 'px';
             pointer.style.top = y + 'px';
             coordinates.textContent = x + ', ' + y;
@@ -134,8 +134,8 @@
     
         function move(event) {
             const rect = videoContainer.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = Math.round(event.clientX - rect.left);
+            const y = Math.round(event.clientY - rect.top);
             pointer.style.left = x + 'px';
             pointer.style.top = y + 'px';
             coordinates.textContent = x + ', ' + y;
