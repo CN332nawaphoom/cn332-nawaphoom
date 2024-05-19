@@ -23,7 +23,8 @@ class Factory_Model:
         if model_name == "YOLOV8":
             if self.Model_YOLOV8 is None:
                 self.Model_YOLOV8 = YOLOV8()
-            return self.Model_YOLOV8
+            # return self.Model_YOLOV8
+            return YOLOV8()
         elif model_name == "YOLOV7":
             pass
         else:

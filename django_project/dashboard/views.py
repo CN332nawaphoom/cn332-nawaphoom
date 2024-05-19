@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import TaskForm, Task, Task_process
 from . import Factory
 import json
 from django.core.files import File
 import os
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required
@@ -18,10 +19,16 @@ def dashboard(request):
 @login_required
 def upload_video(request):
     if request.method == 'POST':
-        print(request.FILES)
+        user = request.user
+        user_from_db = get_object_or_404(User, username=user.username)
+        # print(request.FILES)
+
         form = TaskForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            task = form.save()
+            task.uploaded_by = user_from_db
+            task.save()
+
     else:
         form = TaskForm()
 
@@ -69,11 +76,15 @@ def process(request, id):
             task_process = Task_process.objects.create(task=task,detected_vdo=my_video_file)
             task_process.extra_data = json.dumps(data)
             task_process.save()
+        task.save()
     return redirect("dashboard")
 
 def process_info(request, id):
     task = Task.objects.get(id=id)
     process = Task_process.objects.filter(task=task).order_by('-id').first()
+
+    if process == None:
+        return redirect('dashboard')
     vdo_name = process.detected_vdo.url
     data = process.get_data()
 

@@ -13,15 +13,15 @@
 {% endblock navbar %}
 
 {% block body %}
-    <main class="container mt-2">
+    <div class="container mt-3">
         <div class="card border-0">
-            <a href="{% url 'upload_video' %}" class="btn btn-success col-1 align-self-end text-nowrap">Upload</a>
+            <a href="{% url 'upload_video' %}" class="btn btn-success align-self-end">Upload New Video</a>
 
             <div class="table-responsive">
                 <table class="table table-striped text-center">
-                    <thead>
+                    <thead class="text-nowrap">
                         <tr>
-                            <th>Intersection Name</th>
+                            <th>Intersection</th>
                             <th>Province</th>
                             <th>Status</th>
                             <th>Date Added</th>
@@ -32,7 +32,7 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody class="table-group-divider align-middle">
+                    <tbody class="table-group-divider align-middle text-nowrap">
                         {% for task in tasks %}
                             <tr>
                                 <td>{{ task.intersection_name }}</td>
@@ -51,7 +51,7 @@
                 </table>
             </div>
         </div>
-    </main>
+    </div>
 {% endblock body %}
 
 

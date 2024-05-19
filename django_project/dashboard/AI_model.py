@@ -42,15 +42,16 @@ class YOLOV8(Model_AI):
         
         #region_rect = [[(0, 800), (600, 700), (600, 900), (0, 900)],[(1000, 800), (1600, 700), (1600, 900), (1000, 900)]]
         region_rect = coordinate
-        for l in region_rect:
-            for idx in range(len(l)):
-                l[idx] = ( (l[idx][0]*frame_width)//960,(l[idx][1]*frame_height)//540)
+        # for l in region_rect:
+        #     for idx in range(len(l)):
+        #         l[idx] = ( (l[idx][0]*frame_width)//960,(l[idx][1]*frame_height)//540)
 
         # Init Object Counter
         counters = [object_counter.ObjectCounter() for _ in range(len(region_rect))]
         print(counters)
         for c in range(len(counters)):
-            counters[c].set_args(view_img=True,
+            counters[c].set_args(
+                        view_img=True,
                          view_in_counts =False,      
                          view_out_counts =False,
                          reg_pts=region_rect[c],
