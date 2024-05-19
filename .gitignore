@@ -16,7 +16,7 @@ __pycache__/
 !.gitkeep
 
 # Media files
-/media/
+media/
 videos/
 
 # Virtual environment
