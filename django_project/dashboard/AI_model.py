@@ -1,3 +1,4 @@
+import os
 from ultralytics import YOLO
 from ultralytics.solutions import object_counter
 import numpy as np
@@ -27,6 +28,11 @@ class YOLOV8(Model_AI):
     
     def detect(self, path_input:str,coordinate):
         filename = "media/detection/"+ path_input.split("\\")[-1]
+        
+        if not os.path.exists("media/detection/"):
+            os.makedirs("media/detection/")
+            print(f"Created directory: media/detection/")
+
         print(f"output_path:{filename}")
         print(f"device:{self.device}")
 
@@ -51,7 +57,7 @@ class YOLOV8(Model_AI):
         print(counters)
         for c in range(len(counters)):
             counters[c].set_args(
-                        view_img=True,
+                        view_img=False,
                          view_in_counts =False,      
                          view_out_counts =False,
                          reg_pts=region_rect[c],
