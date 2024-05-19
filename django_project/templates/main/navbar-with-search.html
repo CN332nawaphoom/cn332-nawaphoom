@@ -1,19 +1,25 @@
 {% load static %}
-<body>
-    <nav>
-        <div class="home-dashboard">
-            <a href="{% url 'index' %}" id="home-icon"><img src="{% static 'img/home.svg' %}" alt=""></a>
-            {% comment %} <a href="{% url 'dashboard' %}"><img src="{% static 'img/team_dashboard.svg' %}" alt=""><label>Dashboard</label></a> {% endcomment %}
-            <input type="search" name="search" id="" placeholder="type traffic here">
-        </div>
-        
 
-        <div class="profile-container">
-            <img src="{% static 'img/account_circle.svg' %}" id="account_circle">
-            <div class='drop-down-content'>
-                <a href="{% url 'profile' %}" class="drop-down-item">My Profile</a>
-                <a href="{% url 'logout' %}" class="drop-down-item">Logout</a>
+<main>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a href="" class="navbar-brand">Traffic Monitoring</a>
+
+
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="Expand Navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav text-end">
+                    <li class="nav-item">
+                        <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
-</body>
+</main>
