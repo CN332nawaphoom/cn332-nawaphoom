@@ -57,7 +57,7 @@ class YOLOV8(Model_AI):
         print(counters)
         for c in range(len(counters)):
             counters[c].set_args(
-                        view_img=False,
+                        view_img=True,
                          view_in_counts =False,      
                          view_out_counts =False,
                          reg_pts=region_rect[c],

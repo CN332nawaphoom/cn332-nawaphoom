@@ -58,3 +58,9 @@ class TaskForm(forms.ModelForm):
             'video': 'Video'
         }
 
+        widgets = {
+            'intersection_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'province': forms.TextInput(attrs={'class': 'form-control'}),
+            'video': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
