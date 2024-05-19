@@ -18,6 +18,7 @@ __pycache__/
 # Media files
 media/
 videos/
+/detection/
 
 # Virtual environment
 venv/
