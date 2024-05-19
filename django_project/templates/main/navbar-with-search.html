@@ -1,25 +1,23 @@
 {% load static %}
 
-<main>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container">
-            <a href="{% url 'dashboard' %}" class="navbar-brand">Traffic Monitoring</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a href="{% url 'dashboard' %}" class="navbar-brand">Traffic Monitoring</a>
 
 
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="Expand Navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-label="Expand Navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav text-end">
-                    <li class="nav-item">
-                        <a href="{% url 'profile' %}" class="nav-link">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav text-end">
+                <li class="nav-item">
+                    <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                </li>
+            </ul>
         </div>
-    </nav>
-</main>
+    </div>
+</nav>
