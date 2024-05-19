@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -33,7 +33,10 @@ def upload_image(request):
 
 @login_required
 def profile(request):
-    return render(request, "main/profile.html")
+    user = request.user
+    user_from_db = get_object_or_404(User, username=user.username)
+    
+    return render(request, "main/profile.html", {"user": user_from_db})
 
 
 

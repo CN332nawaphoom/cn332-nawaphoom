@@ -2,19 +2,350 @@
 {% load static %}
 
 {% block title %}Task info{% endblock title %}
-{% block extra_head %}
+{% comment %} {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-{% endblock extra_head %}
+<style>
+   
+    #video-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-left: 500px;
+        margin-bottom: 50px;
+    }
+
+    #config {
+
+        display: flex;
+        flex-direction: row;
+
+    }
+</style>
+{% endblock extra_head %} {% endcomment %}
+
+{% block navbar %}{% include 'main/navbar-with-search.html' %}{% endblock navbar %}
 
 {% block body %}
-    {% include 'main/navbar-with-search.html' %}
-    <ul>
-        <li>intersection: {{ task.intersection_name }}</li>
-        <li>province: {{ task.province}}</li>
-        <li>date created: {{ task.date_created }}</li>
-        <li>date modified: {{ task.date_modified }}</li>
-        <li>upload by: {{ task.uploaded_by }}</li>
-    </ul>
+    <div class="container mt-4">
+        <div class="row row-cols-1 d-flex justify-content-center">
+
+            {% comment %} video and config {% endcomment %}
+            <div class="row row-cols-md-2 justify-content-between ">
+                <div class="col card p-2" id="video-container" style="width: 67%">
+                    <video id="myVideo" width="100%" controls>
+                        <source src="{{ task.video.url }}" type="video/mp4" >
+                    </video>
+                </div>
+
+                {% comment %} config {% endcomment %}
+                <div class="col d-none d-md-block card p-2" style="width: 30%">
+                    <table class="table table-bordered border-1">
+                        <tr>
+                            <th>Coordinates(X, Y)</th>
+                            <td>
+                                <span id="coordinates">x, y</span>
+                                <div id="pointer"></div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    
+                    <div id="config">
+                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}" class="d-flex flex-column">
+                            {% csrf_token %}
+                            <table class="table table-bordered col align-middle">
+                                <tr>
+                                    <th><label for="coordinates1" class="form-label">Coordinate 1</label></th>
+                                    <td><input type="text" id="coordinates1" name="coordinates1" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates2" class="form-label">coordinates2</label></th>
+                                    <td><input type="text" id="coordinates2" name="coordinates2" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates3" class="form-label">Coordinate 3</label></th>
+                                    <td><input type="text" id="coordinates3" name="coordinates3" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates4" class="form-label">Coordinate 4</label></th>
+                                    <td><input type="text" id="coordinates4" name="coordinates4" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                            </table>
+
+                            <div class="d-flex flex-row justify-content-between">
+                                <div id="select_model" class="d-flex flex-row">
+                                    {% comment %} <label for="dropdown" class="form-label">Select model</label><br> {% endcomment %}
+                                    <select id="dropdown" required class="form-select">
+                                        <option value="YOLOV8">YOLOV8</option>
+                                        <option value="YOLOV7">YOLOV7</option>
+                                        <option value="YOLOV6">YOLOV6</option>
+                                    </select>
+                                    <input id="process" type="submit" value="process" class="btn btn-primary">
+                                </div>
+
+                                <input type="button" id='addButton' value="Add" class="btn btn-success h-50">
+                            </div>
+ 
+
+                        </form>
+
+
+                        <div class="mt-1" style="max-height: 80px; overflow-y: auto;">
+                            <table class="table table-bordered mt-3" id="filledCoordinates">
+                                <tbody id="coord_body"></tbody>
+                            </table> 
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            
+            {% comment %} large screen {% endcomment %}
+            <div class="col table-responsive d-none d-md-block">
+                <table class="table table-striped text-center">
+                    <thead class="text-nowrap">
+                        <tr>
+                            <th>Intersection</th>
+                            <th>Province</th>
+                            <th>Status</th>
+                            <th>Date Added</th>
+                            <th>Date Modified</th>
+                            <th>Uploaded By</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider align-middle text-nowrap">
+                        <tr>
+                            <td>{{ task.intersection_name }}</td>
+                            <td>{{ task.province }}</td>
+                            <td>status</td>
+                            <td>{{ task.date_created }}</td>
+                            <td>{{ task.date_modified }}</td>
+                            <td>{{ task.uploaded_by }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {% comment %} small screen {% endcomment %}
+            <div class="col table-responsive d-md-none">
+                <table class="table table-striped text-center">
+                    <tr>
+                        <th>Intersection</th>
+                        <td>{{ task.intersection_name }}</td>
+                    </tr>
     
+                    <tr>
+                        <th>Province</th>
+                        <td>{{ task.province }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Status</th>
+                        <td>status</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Date Added</th>
+                        <td>{{ task.date_created }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Date Modified</th>
+                        <td>{{ task.date_modified }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Upload By</th>
+                        <td>{{ task.uploaded_by }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+        
+    </div>
+
+
+    
+    <script>
+        const videoContainer = document.getElementById('video-container');
+        const pointer = document.getElementById('pointer');
+        const coordinates = document.getElementById('coordinates');
+        let send = document.getElementById('process');
+        let form = document.getElementById('myfillform');
+        let selectedInput = null
+        let filledCoordinatesLists = [];
+        let count = 0;
+
+        // Get the <ul> element by its id
+        const coordinatesList = document.getElementById("filledCoordinates");
+
+        // TODO: 
+        function updatelist(index) {
+            let coor = filledCoordinatesLists[index];
+                
+            //const listItem = document.createElement("li");
+            const coord_body = document.getElementById("coord_body");
+
+            const tr = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const td4 = document.createElement("td");
+
+            td1.textContent = `(${coor["coordinates1"]})`;
+            td2.textContent = `(${coor["coordinates2"]})`;
+            td3.textContent = `(${coor["coordinates3"]})`;
+            td4.textContent = `(${coor["coordinates4"]})`;
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            coord_body.appendChild(tr)
+            
+            // listItem.textContent = `(${coor["coordinates1"]}), (${coor["coordinates2"]}), (${coor["coordinates3"]}), (${coor["coordinates4"]})`;
+
+            coordinatesList.appendChild(coord_body);
+           
+        };
+
+        let defaultwidth; // Define defaultwidth in a scope accessible to all functions
+        let defaultheight; // Define defaultheight in a scope accessible to all functions
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to get video dimensions
+            function getVideoDimensions() {
+                const video = document.getElementById('myVideo');
+                if (video.readyState >= 2) {
+                    defaultwidth = video.videoWidth;
+                    defaultheight = video.videoHeight;
+                    console.log(defaultwidth);
+                    console.log(defaultheight);
+                } else {
+                    // Retry after a short delay if video metadata is not ready
+                    setTimeout(getVideoDimensions, 500);
+                }
+            }
+
+            getVideoDimensions(); // Call the function to get video dimensions
+        });
+        
+        function updatePointer(event) {
+            const rect = videoContainer.getBoundingClientRect();
+            
+            // Check if defaultwidth and defaultheight are defined before using them
+            if (defaultwidth !== undefined && defaultheight !== undefined) {
+                // Calculate the ratios to adjust pointer position and coordinates
+                const xRatio = defaultwidth / rect.width;
+                const yRatio = defaultheight / rect.height;
+        
+                // Calculate the adjusted coordinates
+                const x = Math.round((event.clientX - rect.left) * xRatio);
+                const y = Math.round((event.clientY - rect.top) * yRatio);
+        
+                // Update pointer position and display coordinates
+                pointer.style.left = x + 'px';
+                pointer.style.top = y + 'px';
+                coordinates.textContent = x + ', ' + y;
+                pointer.style.display = 'block';
+        
+                // Update form field with coordinates
+                if (selectedInput) {
+                    selectedInput.value = x + ', ' + y;
+                }
+            }
+        }
+
+            
+    
+        function move(event) {
+            const rect = videoContainer.getBoundingClientRect();
+            const x = Math.round(event.clientX - rect.left);
+            const y = Math.round(event.clientY - rect.top);
+            pointer.style.left = x + 'px';
+            pointer.style.top = y + 'px';
+            coordinates.textContent = x + ', ' + y;
+            pointer.style.display = 'block';
+        }
+        // Event listener for mouse click
+        videoContainer.addEventListener('click', function(event) {
+            if (selectedInput) {
+                selectedInput.focus();
+            }
+            updatePointer(event);
+        });
+
+        // Function to set the selected input field
+        function setSelectedInput(input) {
+            selectedInput = input;
+        
+        }   
+    
+        videoContainer.addEventListener('mousemove', move);
+    
+        function addform(){
+
+            // Get the filled values
+            const coordinatesObj = {
+                coordinates1: document.getElementById('coordinates1').value,
+                coordinates2: document.getElementById('coordinates2').value,
+                coordinates3: document.getElementById('coordinates3').value,
+                coordinates4: document.getElementById('coordinates4').value
+            };
+
+            filledCoordinatesLists.push(coordinatesObj);
+
+
+            //clear after adding
+            document.getElementById('coordinates1').value = '';
+            document.getElementById('coordinates2').value = '';
+            document.getElementById('coordinates3').value = '';
+            document.getElementById('coordinates4').value = '';
+        
+        };
+        
+        
+        document.getElementById('addButton').addEventListener('click', function(event) {
+            addform()
+            updatelist(count)
+            count++;
+        });   
+        
+        send.addEventListener('click', function(event) {
+            // Add the list of added coordinates as a hidden input field
+            // Get the dropdown element
+            let dropdown = document.getElementById('dropdown');
+
+            // Get the selected option value
+            let selectedmodel = dropdown.options[dropdown.selectedIndex].value;
+
+            // Log the selected option value to the console
+            console.log(selectedmodel);
+            console.log("send")
+
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'Coordinates&model';
+            
+            hiddenInput.value = JSON.stringify({
+                model: selectedmodel,
+                CoordinatesLists: filledCoordinatesLists
+            });
+
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        });
+    </script>
     
 {% endblock body %}

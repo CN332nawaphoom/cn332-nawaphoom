@@ -1,0 +1,85 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Task info{% endblock title %}
+
+{% block navbar %}{% include 'main/navbar-with-search.html' %}{% endblock navbar %}
+
+{% block body %}
+<div class="mt-4 d-flex align-content-between">
+    {% comment %} video {% endcomment %}
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col-md-8 col-12 p-2">
+            <div class="card w-100">
+                <div class="card-body" id="video-container">
+                    <video id="myVideo" width="100%" controls>
+                        <source src="{{ process.detected_vdo.url }}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} small screen {% endcomment %}
+        <div class="col-md-4 col-12 p-2">
+            <div class="container w-100">
+                <div class="card mb-2">
+                    <div class="card-body overflow-auto">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Road</th>
+                                <th>Count</th>
+                            </tr>
+                            {% for key, value in data.items %}
+                                <tr>
+                                    <td>{{ key }}</td>
+                                    <td>{{ value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped text-center">
+                            <tr>
+                                <th>Intersection</th>
+                                <td>{{ task.intersection_name }}</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Province</th>
+                                <td>{{ task.province }}</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Status</th>
+                                <td>status</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Date Added</th>
+                                <td>{{ task.date_created }}</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Date Modified</th>
+                                <td>{{ task.date_modified }}</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Upload By</th>
+                                <td>{{ task.uploaded_by }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+{% endblock body %}

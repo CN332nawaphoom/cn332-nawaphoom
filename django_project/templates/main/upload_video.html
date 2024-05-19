@@ -2,20 +2,61 @@
 {% load static %}
 
 {% block title %}Upload Video{% endblock title %}
+
+
+
+
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <style>
+        body { height: 100dvh; }
+        main { height: 100%;}
+    </style>
+
+
 {% endblock extra_head %}
+    
 
 {% block body %}
-    {% include 'main/navbar-with-search.html' %}
+    
     {% if not form.is_valid %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <input type="submit">
-        </form>
+
+    <div class="h-100 w-100 d-flex flex-column">
+        <div>
+            {% include 'main/navbar-with-search.html' %}
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center flex-grow-1">
+            <div class="card p-4">
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="table table-borderless align-middle">
+                        <tr>
+                            <td><label for="id_intersection_name" class="form-label fw-bold">Intersection</label></td>
+                            <td>{{ form.intersection_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><label for="id_intersection_name" class="form-label fw-bold">Province</label></td>
+                            <td>{{ form.province }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="id_intersection_name" class="form-label fw-bold">Video</label></td>
+                            <td>{{ form.video }}</td>
+                        </tr>
+                    </table>
+
+
+                    <div class="d-flex justify-content-end">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                    
+                </form>
+                
+            </div>
+        </div>
+
+
     {% endif %}
 
     

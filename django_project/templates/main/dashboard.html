@@ -4,61 +4,54 @@
 {% block title %}dashboard{% endblock title %}dashboard
 
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <script>
-        function changeBackgroundColor(color)
-        {
-            document.body.style.backgroundColor = color;
-        }
-    </script>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/navbar.css' %}"> {% endcomment %}
 {% endblock extra_head %}
 
-{% block body %}
+{% block navbar %}
     {% include 'main/navbar-with-search.html' %}
-    <form>
-        <input type="radio" name="color" value="Tomato" onclick="changeBackgroundColor('Tomato')">Tomato
-        <input type="radio" name="color" value="Orange" onclick="changeBackgroundColor('Orange')">Orange
-        <input type="radio" name="color" value="DodgerBlue" onclick="changeBackgroundColor('DodgerBlue')">DodgerBlue
-        <input type="radio" name="color" value="MediumSeaGreen" onclick="changeBackgroundColor('MediumSeaGreen')">MediumSeaGreen
-        <input type="radio" name="color" value="Gray" onclick="changeBackgroundColor('Gray')">Gray
-        <input type="radio" name="color" value="SlateBlue" onclick="changeBackgroundColor('SlateBlue')">SlateBlue
-        <input type="radio" name="color" value="Violet" onclick="changeBackgroundColor('Violet')">Violet
-        <input type="radio" name="color" value="LightGray" onclick="changeBackgroundColor('LightGray')">LightGray
-    </form>
-    <main>
-        <p><a href="{% url 'upload_video' %}">Upload New Video</a></p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Intersection Name</th>
-                    <th>Province</th>
-                    <th>Status</th>
-                    <th>Date Added</th>
-                    <th>Date Modified</th>
-                    <th>Uploaded By</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                {% for task in tasks %}
-                    <tr>
-                        <td>{{ task.intersection_name }}</td>
-                        <td>{{ task.province }}</td>
-                        <td>status</td>
-                        <td>{{ task.date_created }}</td>
-                        <td>{{ task.date_modified }}</td>
-                        <td>{{ task.uploaded_by }}</td>
-                        <td><a href="{% url 'task_info' id=task.id %}">View</a></td>
-                    </tr>
-                {% endfor %}
-                    
-            </tbody>
+{% endblock navbar %}
 
+{% block body %}
+    <div class="container mt-3">
+        <div class="card border-0">
+            <a href="{% url 'upload_video' %}" class="btn btn-success align-self-end">Upload New Video</a>
 
-        </table>
-    </main>
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead class="text-nowrap">
+                        <tr>
+                            <th>Intersection</th>
+                            <th>Province</th>
+                            <th>Status</th>
+                            <th>Date Added</th>
+                            <th>Date Modified</th>
+                            <th>Uploaded By</th>
+                            <th>Process</th>
+                            <th>Dectection</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider align-middle text-nowrap">
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.intersection_name }}</td>
+                                <td>{{ task.province }}</td>
+                                <td>status</td>
+                                <td>{{ task.date_created }}</td>
+                                <td>{{ task.date_modified }}</td>
+                                <td>{{ task.uploaded_by }}</td>
+                                <td><a href="{% url 'task_info' id=task.id %}" class="btn btn-primary">Process</a></td>
+                                <td><a href="{% url 'process_info' id=task.id %}" class="btn btn-primary">View Result</a></td>
+                                <td><a href="{% url 'delete_task' id=task.id %}" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
 
 
