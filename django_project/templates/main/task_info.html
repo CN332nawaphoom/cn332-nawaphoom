@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Task info{% endblock title %}
-{% block extra_head %}
+{% comment %} {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 <style>
    
@@ -21,65 +21,130 @@
 
     }
 </style>
-{% endblock extra_head %}
+{% endblock extra_head %} {% endcomment %}
+
+{% block navbar %}{% include 'main/navbar-with-search.html' %}{% endblock navbar %}
 
 {% block body %}
-    {% include 'main/navbar-with-search.html' %}
-    <ul>
-        <li>intersection: {{ task.intersection_name }}</li>
-        <li>province: {{ task.province}}</li>
-        <li>date created: {{ task.date_created }}</li>
-        <li>date modified: {{ task.date_modified }}</li>
-        <li>upload by: {{ task.uploaded_by }}</li>
-    </ul>
+    <div class="container mt-4 gap-2">
+        <div class="row row-cols-1 d-flex justify-content-center">
+
+            {% comment %} video and config {% endcomment %}
+            <div class="row row-cols-md-2">
+                <div class="col col-md-7" id="video-container">
+                    <video id="myVideo" width="100%">
+                        <source src="{{ task.video.url }}" type="video/mp4" >
+                    </video>
+                </div>
+
+                    {% comment %} config {% endcomment %}
+                <div class="col col-md-5 d-none d-md-block" >
+                    <p>Coordinates(x,y): <span id="coordinates">x, y</span></p>
+                    <div id="pointer"></div>
+                    
+                    <div id="config">
+                        <ul id="filledCoordinates" style="margin-right: 30px;">
+                            <p>added list</p>
+                        </ul> 
+
+                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}">
+                            {% csrf_token %}
+                            <label for="coordinates1">coordinates1</label>
+                            <input type="text" id="coordinates1" name="coordinates1" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+                            <label for="coordinates2">coordinates2</label>
+                            <input type="text" id="coordinates2" name="coordinates2" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+                            <label for="coordinates3">coordinates3</label>
+                            <input type="text" id="coordinates3" name="coordinates3" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+                            <label for="coordinates4">coordinates4</label>
+                            <input type="text" id="coordinates4" name="coordinates4" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+
+                            <input type="button" id='addButton' value="add" style="margin-left: 85px; margin-top: 10px;">
+
+                        </form>
+
+                        <div id="select_model" style="margin-left: 30px;">
+                            <label for="dropdown">Select model</label><br>
+                            <select id="dropdown" required>
+                                <option value="YOLOV8">YOLOV8</option>
+                                <option value="YOLOV7">YOLOV7</option>
+                                <option value="YOLOV6">YOLOV6</option>
+                            </select>
+                            <input id="process" type="submit" value="process">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
- 
-    <div id="video-container">
-
-        <video id="myVideo" controls width="960" height="540">
             
-            <source src="{{ task.video.url }}" type="video/mp4">
-            
-        </video>
-        <p>Coordinates(x,y): <span id="coordinates">x, y</span></p>
-        <div id="pointer"></div>
-        
+            {% comment %} large screen {% endcomment %}
+            <div class="col table-responsive d-none d-md-block">
+                <table class="table table-striped text-center">
+                    <thead class="text-nowrap">
+                        <tr>
+                            <th>Intersection</th>
+                            <th>Province</th>
+                            <th>Status</th>
+                            <th>Date Added</th>
+                            <th>Date Modified</th>
+                            <th>Uploaded By</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider align-middle text-nowrap">
+                        <tr>
+                            <td>{{ task.intersection_name }}</td>
+                            <td>{{ task.province }}</td>
+                            <td>status</td>
+                            <td>{{ task.date_created }}</td>
+                            <td>{{ task.date_modified }}</td>
+                            <td>{{ task.uploaded_by }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-
-        
-        
-        <div id="config">
-             
-            <ul id="filledCoordinates" style="margin-right: 30px;">
-                <p>added list</p>
-            </ul> 
-
-            <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}">
-                {% csrf_token %}
-                <label for="coordinates1">coordinates1</label>
-                <input type="text" id="coordinates1" name="coordinates1" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                <label for="coordinates2">coordinates2</label>
-                <input type="text" id="coordinates2" name="coordinates2" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                <label for="coordinates3">coordinates3</label>
-                <input type="text" id="coordinates3" name="coordinates3" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                <label for="coordinates4">coordinates4</label>
-                <input type="text" id="coordinates4" name="coordinates4" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-
-                <input type="button" id='addButton' value="add" style="margin-left: 85px; margin-top: 10px;">
-
-            </form>
-
-            <div id="select_model" style="margin-left: 30px;">
-                <label for="dropdown">Select model</label><br>
-                <select id="dropdown" required>
-                    <option value="YOLOV8">YOLOV8</option>
-                    <option value="YOLOV7">YOLOV7</option>
-                    <option value="YOLOV6">YOLOV6</option>
-                </select>
-                <input id="process" type="submit" value="process">
+            {% comment %} small screen {% endcomment %}
+            <div class="col table-responsive d-md-none">
+                <table class="table table-striped text-center">
+                    <tr>
+                        <th>Intersection</th>
+                        <td>{{ task.intersection_name }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Province</th>
+                        <td>{{ task.province }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Status</th>
+                        <td>status</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Date Added</th>
+                        <td>{{ task.date_created }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Date Modified</th>
+                        <td>{{ task.date_modified }}</td>
+                    </tr>
+    
+                    <tr>
+                        <th>Upload By</th>
+                        <td>{{ task.uploaded_by }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
+    </div>
+
+
+
+
+
+        
     </div>
 
 
