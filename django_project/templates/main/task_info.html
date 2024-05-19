@@ -26,25 +26,32 @@
 {% block navbar %}{% include 'main/navbar-with-search.html' %}{% endblock navbar %}
 
 {% block body %}
-    <div class="container mt-4 gap-2">
+    <div class="container mt-4">
         <div class="row row-cols-1 d-flex justify-content-center">
 
             {% comment %} video and config {% endcomment %}
-            <div class="row row-cols-md-2">
-                <div class="col col-md-7" id="video-container">
+            <div class="row row-cols-md-2 justify-content-between ">
+                <div class="col card p-2" id="video-container" style="width: 67%">
                     <video id="myVideo" width="100%">
                         <source src="{{ task.video.url }}" type="video/mp4" >
                     </video>
                 </div>
 
-                    {% comment %} config {% endcomment %}
-                <div class="col col-md-5 d-none d-md-block" >
-                    <p>Coordinates(x,y): <span id="coordinates">x, y</span></p>
-                    <div id="pointer"></div>
+                {% comment %} config {% endcomment %}
+                <div class="col d-none d-md-block card p-2" style="width: 30%">
+                    <table class="table table-bordered border-1">
+                        <tr>
+                            <th>Coordinates(x,y)</th>
+                            <td>
+                                <span id="coordinates">x, y</span>
+                                <div id="pointer"></div>
+                            </td>
+                        </tr>
+                    </table>
+
                     
                     <div id="config">
                         <ul id="filledCoordinates" style="margin-right: 30px;">
-                            <p>added list</p>
                         </ul> 
 
                         <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}">
