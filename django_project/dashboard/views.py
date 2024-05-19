@@ -28,6 +28,7 @@ def upload_video(request):
             task = form.save()
             task.uploaded_by = user_from_db
             task.save()
+            return redirect('dashboard')
 
     else:
         form = TaskForm()
