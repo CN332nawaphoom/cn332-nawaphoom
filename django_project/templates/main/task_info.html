@@ -41,7 +41,7 @@
                 <div class="col d-none d-md-block card p-2" style="width: 30%">
                     <table class="table table-bordered border-1">
                         <tr>
-                            <th>Coordinates(x,y)</th>
+                            <th>Coordinates(X, Y)</th>
                             <td>
                                 <span id="coordinates">x, y</span>
                                 <div id="pointer"></div>
@@ -51,7 +51,7 @@
 
                     
                     <div id="config">
-                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}" class="d-flex flex-column";>
+                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}" class="d-flex flex-column">
                             {% csrf_token %}
                             <table class="table table-bordered col align-middle">
                                 <tr>
@@ -90,7 +90,7 @@
                         </form>
 
 
-                        <div class="mt-1" style="max-height: 75px; overflow-y: auto;">
+                        <div class="mt-1" style="max-height: 80px; overflow-y: auto;">
                             <table class="table table-bordered mt-3" id="filledCoordinates">
                                 <tbody id="coord_body"></tbody>
                             </table> 
