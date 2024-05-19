@@ -55,19 +55,19 @@
                             {% csrf_token %}
                             <table class="table table-bordered col align-middle">
                                 <tr>
-                                    <th><label for="coordinates1" class="form-label">Coordinate 1</label></th>
+                                    <th><label for="coordinates1" class="form-label">C1</label></th>
                                     <td><input type="text" id="coordinates1" name="coordinates1" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
                                 </tr>
                                 <tr>
-                                    <th><label for="coordinates2" class="form-label">coordinates2</label></th>
+                                    <th><label for="coordinates2" class="form-label">C2</label></th>
                                     <td><input type="text" id="coordinates2" name="coordinates2" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
                                 </tr>
                                 <tr>
-                                    <th><label for="coordinates3" class="form-label">Coordinate 3</label></th>
+                                    <th><label for="coordinates3" class="form-label">C3</label></th>
                                     <td><input type="text" id="coordinates3" name="coordinates3" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
                                 </tr>
                                 <tr>
-                                    <th><label for="coordinates4" class="form-label">Coordinate 4</label></th>
+                                    <th><label for="coordinates4" class="form-label">C4</label></th>
                                     <td><input type="text" id="coordinates4" name="coordinates4" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
                                 </tr>
                             </table>
@@ -75,7 +75,7 @@
                             <div class="d-flex flex-row justify-content-between">
                                 <div id="select_model" class="d-flex flex-row">
                                     {% comment %} <label for="dropdown" class="form-label">Select model</label><br> {% endcomment %}
-                                    <select id="dropdown" required class="form-select">
+                                    <select id="dropdown" required class="form-select me-2">
                                         <option value="YOLOV8">YOLOV8</option>
                                         <option value="YOLOV7">YOLOV7</option>
                                         <option value="YOLOV6">YOLOV6</option>
