@@ -2,60 +2,61 @@
 {% load static %}
 
 {% block title %}Task info{% endblock title %}
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 
-<style>
-    #video-container {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        margin-left: 500px;
-        
-    }
-    table,th,td { 
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding: 5px;
-        text-align: center;
-        margin-left: 20px;
-    }
-    
-</style>
-{% endblock extra_head %}
+{% block navbar %}{% include 'main/navbar-with-search.html' %}{% endblock navbar %}
 
 {% block body %}
-    {% include 'main/navbar-with-search.html' %}
-    <ul>
-        <li>intersection: {{ task.intersection_name }}</li>
-        <li>province: {{ task.province}}</li>
-        <li>date created: {{ task.date_created }}</li>
-        <li>date modified: {{ task.date_modified }}</li>
-        <li>upload by: {{ task.uploaded_by }}</li>
-    </ul>
-    <div id="video-container">
-        <video width="640" height="360" controls>
-            <source src="{{ process.detected_vdo.url }}" type="video/mp4">
-        </video>
+<div class="container mt-4">
+    {% comment %} video {% endcomment %}
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col-md-8 col-12 p-2">
+            <div class="card">
+                <div class="card-body" id="video-container">
+                    <video id="myVideo" width="100%" controls>
+                        <source src="{{ process.detected_vdo.url }}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
 
-        <div class="data_process">
-            <table>
-                <tr>
-                    <th>Road</th>
-                    <th>Count</th>
-                </tr>
-                {% for key, value in data.items %}
-                    <tr>
-                        <td>{{ key }}</td>
-                        <td>{{ value }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        {% comment %} small screen {% endcomment %}
+        <div class="col-md-4 col-12 p-2 table-responsive">
+            <div class="card h-100">
+                <div class="card-body">
+                    <table class="table table-striped text-center">
+                        <tr>
+                            <th>Intersection</th>
+                            <td>{{ task.intersection_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Province</th>
+                            <td>{{ task.province }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Status</th>
+                            <td>status</td>
+                        </tr>
+
+                        <tr>
+                            <th>Date Added</th>
+                            <td>{{ task.date_created }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Date Modified</th>
+                            <td>{{ task.date_modified }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Upload By</th>
+                            <td>{{ task.uploaded_by }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-
-    
-    
-
-
+</div>
 {% endblock body %}
