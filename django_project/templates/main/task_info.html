@@ -151,10 +151,6 @@
     
     <script>
         const videoContainer = document.getElementById('video-container');
-        const defaultwidth = document.getElementById('myVideo');
-        const defaultheight = document.getElementById('myVideo').height;
-        console.log(defaultwidth)
-        console.log(defaultheight)
         const pointer = document.getElementById('pointer');
         const coordinates = document.getElementById('coordinates');
         let send = document.getElementById('process');
@@ -178,23 +174,53 @@
            
         };
 
+        let defaultwidth; // Define defaultwidth in a scope accessible to all functions
+        let defaultheight; // Define defaultheight in a scope accessible to all functions
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to get video dimensions
+            function getVideoDimensions() {
+                const video = document.getElementById('myVideo');
+                if (video.readyState >= 2) {
+                    defaultwidth = video.videoWidth;
+                    defaultheight = video.videoHeight;
+                    console.log(defaultwidth);
+                    console.log(defaultheight);
+                } else {
+                    // Retry after a short delay if video metadata is not ready
+                    setTimeout(getVideoDimensions, 500);
+                }
+            }
+
+            getVideoDimensions(); // Call the function to get video dimensions
+        });
         
-        // Function to update pointer position and display coordinates
-        function updatePointer(event,select) {
+        function updatePointer(event) {
             const rect = videoContainer.getBoundingClientRect();
-            const x = Math.round(event.clientX - rect.left);
-            const y = Math.round(event.clientY - rect.top);
-            pointer.style.left = x + 'px';
-            pointer.style.top = y + 'px';
-            coordinates.textContent = x + ', ' + y;
-            pointer.style.display = 'block';
-    
-            // Update form fields with coordinates
             
-            if (selectedInput) {
-            selectedInput.value = x + ', ' + y;
+            // Check if defaultwidth and defaultheight are defined before using them
+            if (defaultwidth !== undefined && defaultheight !== undefined) {
+                // Calculate the ratios to adjust pointer position and coordinates
+                const xRatio = defaultwidth / rect.width;
+                const yRatio = defaultheight / rect.height;
+        
+                // Calculate the adjusted coordinates
+                const x = Math.round((event.clientX - rect.left) * xRatio);
+                const y = Math.round((event.clientY - rect.top) * yRatio);
+        
+                // Update pointer position and display coordinates
+                pointer.style.left = x + 'px';
+                pointer.style.top = y + 'px';
+                coordinates.textContent = x + ', ' + y;
+                pointer.style.display = 'block';
+        
+                // Update form field with coordinates
+                if (selectedInput) {
+                    selectedInput.value = x + ', ' + y;
+                }
             }
         }
+
             
     
         function move(event) {
