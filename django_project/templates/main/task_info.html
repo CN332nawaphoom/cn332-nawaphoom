@@ -51,33 +51,52 @@
 
                     
                     <div id="config">
-                        <ul id="filledCoordinates" style="margin-right: 30px;">
-                        </ul> 
-
-                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}">
+                        <form name="myfillform" id="myfillform" method="post"  action="{% url 'process' id=task.id %}" class="d-flex flex-column";>
                             {% csrf_token %}
-                            <label for="coordinates1">coordinates1</label>
-                            <input type="text" id="coordinates1" name="coordinates1" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                            <label for="coordinates2">coordinates2</label>
-                            <input type="text" id="coordinates2" name="coordinates2" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                            <label for="coordinates3">coordinates3</label>
-                            <input type="text" id="coordinates3" name="coordinates3" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
-                            <label for="coordinates4">coordinates4</label>
-                            <input type="text" id="coordinates4" name="coordinates4" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ><br>
+                            <table class="table table-bordered col align-middle">
+                                <tr>
+                                    <th><label for="coordinates1" class="form-label">Coordinate 1</label></th>
+                                    <td><input type="text" id="coordinates1" name="coordinates1" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates2" class="form-label">coordinates2</label></th>
+                                    <td><input type="text" id="coordinates2" name="coordinates2" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates3" class="form-label">Coordinate 3</label></th>
+                                    <td><input type="text" id="coordinates3" name="coordinates3" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="coordinates4" class="form-label">Coordinate 4</label></th>
+                                    <td><input type="text" id="coordinates4" name="coordinates4" class="form-control" onclick="setSelectedInput(this)" onfocus="setSelectedInput(this)" ></td>
+                                </tr>
+                            </table>
 
-                            <input type="button" id='addButton' value="add" style="margin-left: 85px; margin-top: 10px;">
+                            <div class="d-flex flex-row justify-content-between">
+                                <div id="select_model" class="d-flex flex-row">
+                                    {% comment %} <label for="dropdown" class="form-label">Select model</label><br> {% endcomment %}
+                                    <select id="dropdown" required class="form-select">
+                                        <option value="YOLOV8">YOLOV8</option>
+                                        <option value="YOLOV7">YOLOV7</option>
+                                        <option value="YOLOV6">YOLOV6</option>
+                                    </select>
+                                    <input id="process" type="submit" value="process" class="btn btn-primary">
+                                </div>
+
+                                <input type="button" id='addButton' value="Add" class="btn btn-success h-50">
+                            </div>
+ 
 
                         </form>
 
-                        <div id="select_model" style="margin-left: 30px;">
-                            <label for="dropdown">Select model</label><br>
-                            <select id="dropdown" required>
-                                <option value="YOLOV8">YOLOV8</option>
-                                <option value="YOLOV7">YOLOV7</option>
-                                <option value="YOLOV6">YOLOV6</option>
-                            </select>
-                            <input id="process" type="submit" value="process">
+
+                        <div class="mt-1" style="max-height: 75px; overflow-y: auto;">
+                            <table class="table table-bordered mt-3" id="filledCoordinates">
+                                <tbody id="coord_body"></tbody>
+                            </table> 
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -169,15 +188,33 @@
         // Get the <ul> element by its id
         const coordinatesList = document.getElementById("filledCoordinates");
 
-        
+        // TODO: 
         function updatelist(index) {
             let coor = filledCoordinatesLists[index];
                 
-            const listItem = document.createElement("li");
+            //const listItem = document.createElement("li");
+            const coord_body = document.getElementById("coord_body");
 
-            listItem.textContent = `(${coor["coordinates1"]}), (${coor["coordinates2"]}), (${coor["coordinates3"]}), (${coor["coordinates4"]})`;
+            const tr = document.createElement("tr");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const td4 = document.createElement("td");
 
-            coordinatesList.appendChild(listItem);
+            td1.textContent = `(${coor["coordinates1"]})`;
+            td2.textContent = `(${coor["coordinates2"]})`;
+            td3.textContent = `(${coor["coordinates3"]})`;
+            td4.textContent = `(${coor["coordinates4"]})`;
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            coord_body.appendChild(tr)
+            
+            // listItem.textContent = `(${coor["coordinates1"]}), (${coor["coordinates2"]}), (${coor["coordinates3"]}), (${coor["coordinates4"]})`;
+
+            coordinatesList.appendChild(coord_body);
            
         };
 
