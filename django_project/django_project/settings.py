@@ -149,8 +149,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'APP': {
-            'client_id': os.environ['CLIENT_ID'],
-            'secret': os.environ['CLIENT_SECRET'],
+            'client_id': os.getenv('CLIENT_ID', 'default_client_id'),
+            'secret': os.getenv('CLIENT_SECRET', 'default_client_secret'),
         },
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -158,11 +158,10 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 
     'facebook': {
-         
         'APP': {
-            'client_id': os.environ['FB_APP_ID'],
-            'secret': os.environ['FB_APP_SECRET'],
-        },   
+            'client_id': os.getenv('FB_APP_ID', 'default_fb_app_id'),
+            'secret': os.getenv('FB_APP_SECRET', 'default_fb_app_secret'),
+        },
         'AUTH_PARAMS': {
             'access_type': 'online',
         },
